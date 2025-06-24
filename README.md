@@ -14,9 +14,9 @@ Make sure your CakePHP project runs locally:
 URL: http://localhost/Crud_Project/
 
 In config/app_local.php:
-  'username' => 'root', 
-  'password' => '', 
-  'database' => 'crud_project' 
+'username' => 'root', 
+'password' => '', 
+'database' => 'crud_project' 
 
 ✅ Step 2: Log in to the Oracle VM
 Use MobaXterm terminal:
