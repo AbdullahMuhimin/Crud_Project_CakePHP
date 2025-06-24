@@ -14,9 +14,9 @@ Make sure your CakePHP project runs locally:
 URL: http://localhost/Crud_Project/
 
 In config/app_local.php:
-  'username' => 'root',
-  'password' => '',
-  'database' => 'crud_project'
+  'username' => 'root', 
+  'password' => '', 
+  'database' => 'crud_project' 
 
 ✅ Step 2: Log in to the Oracle VM
 Use MobaXterm terminal:
@@ -30,9 +30,9 @@ dnf update -y
 dnf install httpd -y
 systemctl enable --now httpd
 # Install Remi repo to get PHP 8.2
-dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
-dnf module reset php -y
-dnf module enable php:remi-8.2 -y
+dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm 
+dnf module reset php -y 
+dnf module enable php:remi-8.2 -y 
 # Install PHP 8.2 and required extensions
 dnf install -y php php-mysqlnd php-mbstring php-intl php-xml php-bcmath php-pdo php-gd php-cli php-soap php-json php-curl
 # Install MariaDB (MySQL)
