@@ -13,6 +13,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Remove existing project folder on VM
+      uses: appleboy/ssh-action@v0.1.9
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: opc
+        key: ${{ secrets.VM_SSH_KEY }}
+        script: |
+          sudo rm -rf /var/www/html/Crud_Project
+          mkdir -p /var/www/html/Crud_Project
+
     - name: Copy code to VM
       uses: appleboy/scp-action@v0.1.5
       with:
