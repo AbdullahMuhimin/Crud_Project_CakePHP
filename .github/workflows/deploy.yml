@@ -3,14 +3,14 @@ name: Deploy to Oracle VM
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout code from GitHub
       uses: actions/checkout@v3
 
     - name: Remove existing project folder on VM
@@ -21,9 +21,10 @@ jobs:
         key: ${{ secrets.VM_SSH_KEY }}
         script: |
           sudo rm -rf /var/www/html/Crud_Project
-          mkdir -p /var/www/html/Crud_Project
+          sudo mkdir -p /var/www/html/Crud_Project
+          sudo chown -R opc:opc /var/www/html/Crud_Project
 
-    - name: Copy code to VM
+    - name: Copy project to VM
       uses: appleboy/scp-action@v0.1.5
       with:
         host: ${{ secrets.VM_HOST }}
@@ -32,11 +33,15 @@ jobs:
         source: "."
         target: "/var/www/html/Crud_Project"
 
-    - name: Restart Apache
+    - name: Set proper permissions and restart Apache
       uses: appleboy/ssh-action@v0.1.9
       with:
         host: ${{ secrets.VM_HOST }}
         username: opc
         key: ${{ secrets.VM_SSH_KEY }}
         script: |
+          sudo chown -R apache:apache /var/www/html/Crud_Project
+          sudo chmod -R 755 /var/www/html/Crud_Project
+          cd /var/www/html/Crud_Project
+          composer install --no-interaction --prefer-dist --optimize-autoloader
           sudo systemctl restart httpd
